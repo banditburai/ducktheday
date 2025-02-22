@@ -137,6 +137,12 @@ async def process_audio(file: File):
     (
         ffmpeg
         .input(webm_path)
+        .filter('silenceremove',
+               start_periods=1,
+               stop_periods=-1,
+               stop_duration=0.2,
+               start_threshold='-45dB',
+               stop_threshold='-45dB')
         .output(str(flac_path),
                ar=16000,
                ac=1,
