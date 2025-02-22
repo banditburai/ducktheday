@@ -7,6 +7,8 @@ class IconClass(Protocol):
     """Available icon methods"""
     @classmethod
     def edit(cls, *args, **kwargs) -> Icon: ...
+    @classmethod
+    def delete(cls, *args, **kwargs) -> Icon: ...
 
 # Type hint for Icon class
 IconType = IconClass

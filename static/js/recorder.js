@@ -52,6 +52,16 @@ class RecordingManager {
                 <td class="w-1/6 p-2"></td>
                 <td class="w-1/6 p-2 text-right"></td>
                 <td class="w-1/6 p-2 text-right"></td>
+                <td class="w-12 p-2">
+                    <button class="delete-btn btn btn-ghost btn-xs opacity-60 hover:opacity-100">
+                        <svg 
+                            class="inline-block w-4 h-4 text-error" 
+                            data-icon
+                        >
+                            <use href="#icons.delete"/>
+                        </svg>
+                    </button>
+                </td>
             </tr>
         `;
 
@@ -60,6 +70,26 @@ class RecordingManager {
         document.addEventListener('click', () => {
             this.userInteracted = true;
         }, { once: true });
+
+        this.deleteModal = document.getElementById('delete-modal');
+        this.deleteConfirm = document.getElementById('delete-confirm');
+        this.deleteCancel = document.getElementById('delete-cancel');
+        this.recordingToDelete = null;
+
+        this.deleteConfirm.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (this.recordingToDelete) {
+                await this.deleteRecording(this.recordingToDelete);
+                this.deleteModal.close();
+                this.recordingToDelete = null;
+            }
+        });
+
+        this.deleteCancel.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.deleteModal.close();
+            this.recordingToDelete = null;
+        });
     }
 
     async initTable() {
@@ -162,6 +192,13 @@ class RecordingManager {
                 this.loadAudio(rec.name);
             });
 
+            const deleteButton = cells[6].querySelector('.delete-btn');
+            deleteButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.recordingToDelete = rec.name;
+                this.deleteModal.showModal();
+            });
+
             this.tbody.appendChild(row);
         });
 
@@ -175,9 +212,9 @@ class RecordingManager {
     }
 
     async saveToOPFS(blob) {
+        const fileName = `recording_${Date.now()}.flac`;
         try {
             const root = await navigator.storage.getDirectory();
-            const fileName = `recording_${Date.now()}.flac`;
             const fileHandle = await root.getFileHandle(fileName, { create: true });
             const writable = await fileHandle.createWritable();
             await writable.write(blob);
@@ -285,6 +322,32 @@ class RecordingManager {
             duration: rec.duration,
             created: new Date().toISOString()
         });
+    }
+
+    async deleteRecording(filename) {
+        try {            
+            const root = await navigator.storage.getDirectory();
+            
+            // Delete file from OPFS
+            try {
+                await root.removeEntry(filename);
+            } catch (error) {
+                console.log('File not found in OPFS, continuing');
+            }
+
+            // Delete metadata from Dexie
+            await this.db.recordings.where('name').equals(filename).delete();
+
+            // Remove UI row
+            const row = document.querySelector(`tr[data-name="${filename}"]`);
+            if (row) row.remove();
+
+            console.log('Successfully deleted:', filename);
+            
+        } catch (error) {
+            console.error('Delete error:', error);
+            alert('Failed to delete recording');
+        }
     }
 }
 
