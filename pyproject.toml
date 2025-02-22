@@ -1,0 +1,27 @@
+[project]
+name = "ducktheday"
+version = "0.1.0"
+description = "Browser-based voice interface with AI agent integration"
+readme = "README.md"
+authors = [
+    { name = "firefly", email = "promptsiren@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "daisyft",
+    "elevenlabs[pyaudio]>=1.51.0",
+    "fal-client>=0.5.9",
+    "ffmpeg-python>=0.2.0",
+    "python-fasthtml>=0.12.1",
+    "python-multipart>=0.0.20",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["src/ducktheday"]
+
+[tool.uv.sources]
+daisyft = { git = "https://github.com/banditburai/daisyft.git" }
