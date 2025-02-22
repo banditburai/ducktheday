@@ -12,6 +12,7 @@ dependencies = [
     "elevenlabs[pyaudio]>=1.51.0",
     "fal-client>=0.5.9",
     "ffmpeg-python>=0.2.0",
+    "ft-icon",
     "python-fasthtml>=0.12.1",
     "python-multipart>=0.0.20",
 ]
@@ -25,3 +26,4 @@ packages = ["src/ducktheday"]
 
 [tool.uv.sources]
 daisyft = { git = "https://github.com/banditburai/daisyft.git" }
+ft-icon = { git = "https://github.com/banditburai/ft-icon.git" }

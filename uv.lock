@@ -141,6 +141,7 @@ dependencies = [
     { name = "elevenlabs", extra = ["pyaudio"] },
     { name = "fal-client" },
     { name = "ffmpeg-python" },
+    { name = "ft-icon" },
     { name = "python-fasthtml" },
     { name = "python-multipart" },
 ]
@@ -151,6 +152,7 @@ requires-dist = [
     { name = "elevenlabs", extras = ["pyaudio"], specifier = ">=1.51.0" },
     { name = "fal-client", specifier = ">=0.5.9" },
     { name = "ffmpeg-python", specifier = ">=0.2.0" },
+    { name = "ft-icon", git = "https://github.com/banditburai/ft-icon.git" },
     { name = "python-fasthtml", specifier = ">=0.12.1" },
     { name = "python-multipart", specifier = ">=0.0.20" },
 ]
@@ -225,6 +227,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/dd/5e/d5f9105d59c1325759d838af4e973695081fbbc97182baf73afc78dec266/ffmpeg-python-0.2.0.tar.gz", hash = "sha256:65225db34627c578ef0e11c8b1eb528bb35e024752f6f10b78c011f6f64c4127", size = 21543 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d7/0c/56be52741f75bad4dc6555991fabd2e07b432d333da82c11ad701123888a/ffmpeg_python-0.2.0-py3-none-any.whl", hash = "sha256:ac441a0404e053f8b6a1113a77c0f452f1cfc62f6344a769475ffdc0f56c23c5", size = 25024 },
+]
+
+[[package]]
+name = "ft-icon"
+version = "0.1.0"
+source = { git = "https://github.com/banditburai/ft-icon.git#3d6a70b045bd879ef4398f7e53170469dccb7892" }
+dependencies = [
+    { name = "python-fasthtml" },
+    { name = "tw-merge" },
 ]
 
 [[package]]
@@ -619,6 +630,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/ff/fb/2984a686808b89a67
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d9/61/f2b52e107b1fc8944b33ef56bf6ac4ebbe16d91b94d2b87ce013bf63fb84/starlette-0.45.3-py3-none-any.whl", hash = "sha256:dfb6d332576f136ec740296c7e8bb8c8a7125044e7c6da30744718880cdd059d", size = 71507 },
 ]
+
+[[package]]
+name = "tw-merge"
+version = "0.1.0"
+source = { git = "https://github.com/banditburai/tw-merge.git#f51d8aaa7ad73783eca2d7d624ab0c8f39115992" }
 
 [[package]]
 name = "typer"
